@@ -13,6 +13,9 @@
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.0.0-beta.3",
     "bootstrap-vue": "^1.4.0",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.2.1",
+    "simple-line-icons": "^2.4.1",
     "vee-validate": "^2.0.0",
     "vuejs": "^2.0.19"
   }
