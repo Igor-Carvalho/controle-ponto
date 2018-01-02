@@ -1,0 +1,8 @@
+/* global styles */
+.pointer {
+  cursor: pointer;
+}
+
+[v-cloak] {
+  display: none
+}

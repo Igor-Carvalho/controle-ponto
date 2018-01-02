@@ -1,0 +1,40 @@
+<!doctype html>{% load assets static %}
+<html lang="en">
+<head>
+  {% block meta %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  {% endblock meta %}
+
+  <title>{% block title %}Bem vindo{% endblock title %}</title>
+
+  {% block css %}
+    <link rel="stylesheet" href="{% static "bootstrap/dist/css/bootstrap.min.css" %}">
+  {% endblock css %}
+
+  {% assets "css_all" %}<link rel="stylesheet" href="{{ ASSET_URL }}">{% endassets %}
+</head>
+<body>
+  {% block body %}
+    <div class="container">
+      <div id="app">
+        <b-alert show v-cloak>{{ mensagem_django }} - [[ mensagem_vue ]]</b-alert>
+      </div>
+    </div>
+  {% endblock body %}
+
+  {% block scripts %}
+    <script src="{% static "vue/dist/vue.min.js" %}"></script>
+    <script src="{% static "babel-polyfill/dist/polyfill.min.js" %}"></script>
+    <script src="{% static "bootstrap-vue/dist/bootstrap-vue.min.js" %}"></script>
+    <script src="{% static "vee-validate/dist/vee-validate.min.js" %}"></script>
+    <script src="{% static "axios/dist/axios.min.js" %}"></script>
+    <script src="{% static "app/main.js" %}"></script>
+  {% endblock scripts %}
+
+  <script>
+    {% block local_scripts %}{% endblock local_scripts %}
+  </script>
+</body>
+</html>

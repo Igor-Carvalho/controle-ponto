@@ -1,0 +1,19 @@
+{
+  "name": "controle_ponto",
+  "version": "1.0.0",
+  "description": "Gerenciador de controle de ponto",
+  "main": "controle_ponto/assets/app/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Igor Oak <igor.dev.py@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "babel-polyfill": "^6.26.0",
+    "bootstrap": "^4.0.0-beta.3",
+    "bootstrap-vue": "^1.4.0",
+    "vee-validate": "^2.0.0",
+    "vuejs": "^2.0.19"
+  }
+}
