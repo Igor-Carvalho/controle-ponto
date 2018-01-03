@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="row" id="row" v-cloak>
+    <div class="col-lg-4">
+      <b-form-input type="text" v-model="mensagem"></b-form-input>
+      <b-alert show>[[ mensagem ]]</b-alert>
+    </div>
+  </div>  
+{% endblock content %}
+
+{% block local_scripts %}
+  <script>
+    new Vue({
+      el: '#row',
+      delimiters: ['[[', ']]'],
+      data: {
+        mensagem: 'Hello World'
+      }
+    });
+  </script>
+{% endblock local_scripts %}

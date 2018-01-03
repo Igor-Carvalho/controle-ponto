@@ -11,12 +11,15 @@
 
   {% block css %}
     <link rel="stylesheet" href="{% static "bootstrap/dist/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "bootstrap-vue/dist/bootstrap-vue.css" %}">
     <link rel="stylesheet" href="{% static "font-awesome/css/font-awesome.min.css" %}">
     <link rel="stylesheet" href="{% static "simple-line-icons/css/simple-line-icons.css" %}">
     <link rel="stylesheet" href="{% static "css/style.min.css" %}">
   {% endblock css %}
 
   {% assets "css_all" %}<link rel="stylesheet" href="{{ ASSET_URL }}">{% endassets %}
+
+  {% block local_styles %}{% endblock local_styles %}
 </head>
 <body class="{% block body_class %}app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden{% endblock body_class %}">
   {% block body %}
@@ -52,7 +55,7 @@
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <img src="{% static "img/avatars/6.jpg" %}" class="img-avatar" alt="admin@bootstrapmaster.com">
+            <img src="{{ user.gravatar_url }}" class="img-avatar" alt="{{ user.email }}">
           </a>
           <div class="dropdown-menu dropdown-menu-right">
             <div class="dropdown-header text-center">
@@ -82,9 +85,8 @@
         <nav class="sidebar-nav">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" href="{% url "index" %}"><i class="icon-speedometer"></i> Dashboard</a>
+              <a class="nav-link" href="{% url "dashboard" %}"><i class="icon-speedometer"></i> Dashboard</a>
             </li>
-
           </ul>
         </nav>
         <button class="sidebar-minimizer brand-minimizer" type="button"></button>
@@ -94,7 +96,7 @@
       <main class="main">
 
         <div class="container-fluid">
-
+          {% block content %}{% endblock content %}
         </div>
         <!-- /.conainer-fluid -->
       </main>
@@ -120,8 +122,6 @@
     {% assets "js_all" %}<script src="{{ ASSET_URL }}"></script>{% endassets %}
   {% endblock scripts %}
 
-  <script>
-    {% block local_scripts %}{% endblock local_scripts %}
-  </script>
+  {% block local_scripts %}{% endblock local_scripts %}
 </body>
 </html>

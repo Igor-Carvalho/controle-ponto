@@ -8,7 +8,7 @@ from rest_framework import documentation
 from . import routes, views
 
 urlpatterns = [
-    urls.url(r'^$', views.index, name='index'),
+    urls.url(r'^$', views.dashboard, name='dashboard'),
     urls.url(r'^contas/', urls.include('allauth.urls')),
     urls.url(r'^api/v1/', urls.include(routes.urls, namespace='v1')),
     urls.url(r'^api-auth/', urls.include('rest_framework.urls', namespace='rest_framework')),

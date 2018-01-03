@@ -4,10 +4,10 @@ from django.contrib.auth import mixins
 from django.views import generic
 
 
-class IndexView(mixins.LoginRequiredMixin, generic.TemplateView):
+class DashboardView(mixins.LoginRequiredMixin, generic.TemplateView):
     """Index."""
 
-    template_name = 'base.html'
+    template_name = 'dashboard.html'
 
 
-index = IndexView.as_view()
+dashboard = DashboardView.as_view()

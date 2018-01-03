@@ -6,3 +6,7 @@
 [v-cloak] {
   display: none
 }
+
+.main {
+  padding-top: 25px;
+}

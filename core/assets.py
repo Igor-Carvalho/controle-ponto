@@ -3,7 +3,7 @@
 import django_assets
 
 css_files = [
-    'css/base.css',
+    'css/app/*.css',
 ]
 css = django_assets.Bundle(*css_files, filters='cssmin', output='css/bundle.min.css')
 
