@@ -2,10 +2,9 @@
 
 import factory
 from django.contrib import auth
-from factory import django
 
 
-class UserFactory(django.DjangoModelFactory):
+class UserFactory(factory.django.DjangoModelFactory):
     """Fábrica de usuários."""
 
     class Meta:

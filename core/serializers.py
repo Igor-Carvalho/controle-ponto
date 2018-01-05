@@ -8,6 +8,8 @@ class UserSerializer(serializers.ModelSerializer):
     """User serializer."""
 
     class Meta:
+        """Meta opções do serializador."""
+
         model = auth.get_user_model()
         fields = ['id', 'username']
 

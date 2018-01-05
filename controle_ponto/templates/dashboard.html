@@ -3,7 +3,6 @@
 {% block content %}
   <div class="row" id="row" v-cloak>
     <div class="col-lg-4">
-      <b-form-input type="text" v-model="mensagem"></b-form-input>
       <b-alert show>[[ mensagem ]]</b-alert>
     </div>
   </div>  
@@ -11,11 +10,13 @@
 
 {% block local_scripts %}
   <script>
-    new Vue({
+    const v = new Vue({
       el: '#row',
       delimiters: ['[[', ']]'],
-      data: {
-        mensagem: 'Hello World'
+      data() {
+        return {
+          mensagem: 'Olá mundo!'
+        }
       }
     });
   </script>

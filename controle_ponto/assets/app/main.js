@@ -1,10 +1,5 @@
-Vue.use(VeeValidate);
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
-new Vue({
-  el: '#app',
-  delimiters: ['[[', ']]'],
-  data: {
-    data: {},
-    mensagem_vue: 'Vue Rocks!'
-  }
-});
+Vue.use(VeeValidate);
+Vue.use(VueTheMask);
