@@ -13,6 +13,7 @@ class DiaTrabalhoSerializer(serializers.ModelSerializer):
     """Serializador de dias."""
 
     mês_trabalho_str = serializers.StringRelatedField(source='mês_trabalho')
+    dia_semana = serializers.ReadOnlyField(source='get_dia_semana_display')
 
     class Meta:
         """Meta opções do serializador."""
