@@ -1,6 +1,9 @@
 """Views da aplicação ponto."""
 
-from rest_framework import generics, viewsets
+import calendar
+import datetime
+
+from rest_framework import decorators, generics, viewsets, response
 
 from . import models, permissions, serializers
 
@@ -15,6 +18,28 @@ class PontoViewSet(PontoBaseViewSet):
     queryset = models.Ponto.objects.all()
     serializer_class = serializers.PontoSerializer
     permission_classes = (permissions.PontoDonoPermission,)
+
+    @decorators.list_route(methods=['post'], url_path='inicializar-ponto')
+    def inicializar_ponto(self, pk=None):
+        """Cria um ponto referente ao ano que o usuário acessa a app."""
+        cal = calendar.Calendar(6)
+        ano = self.request.query_params.get('ano', None) or datetime.date.today().year
+        ano = int(ano)
+
+        ponto = models.Ponto.objects.get_or_create(dono=self.request.user)[0]
+        carga_horária, created = models.CargaHorária.objects.get_or_create(ponto=ponto, ano=ano)
+
+        if created:
+            for ref in range(1, 13):
+                mês_trabalho = models.MêsTrabalho.objects.get_or_create(carga_horária=carga_horária,
+                                                                        mês='{:02d}'.format(ref))[0]
+
+                for dia, dia_semana in cal.itermonthdays2(ano, ref):
+                    if not dia == 0 and dia_semana not in [5, 6]:
+                        models.DiaTrabalho.objects.get_or_create(mês_trabalho=mês_trabalho,
+                                                                 dia=dia, dia_semana=dia_semana)
+
+        return response.Response({'detail': 'Ponto inicializado com sucesso.'})
 
     def perform_create(self, serializer):
         """Adiciona o usuário atual como dono do recurso."""
@@ -48,6 +73,13 @@ class CargaHoráriaViewSet(PontoBaseViewSet):
 
         return queryset
 
+    def get_serializer_class(self):
+        """Obtém um serializador diferente para exibir mais detalhes sobre a carga horária."""
+        if self.action == 'retrieve':
+            return serializers.CargaHoráriaDetailSerializer
+
+        return super(CargaHoráriaViewSet, self).get_serializer_class()
+
 
 class MêsTrabalhoViewSet(PontoBaseViewSet):
     """Viewset para carga horária."""
@@ -63,6 +95,13 @@ class MêsTrabalhoViewSet(PontoBaseViewSet):
             queryset = queryset.filter(carga_horária__ponto__dono=self.request.user)
 
         return queryset
+
+    def get_serializer_class(self):
+        """Obtém um serializador diferente para exibir mais detalhes sobre o mês trabalho."""
+        if self.action == 'retrieve':
+            return serializers.MêsTrabalhoDetailSerializer
+
+        return super(MêsTrabalhoViewSet, self).get_serializer_class()
 
 
 class DiaTrabalhoViewSet(PontoBaseViewSet):

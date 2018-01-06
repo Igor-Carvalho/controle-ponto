@@ -18,22 +18,52 @@ class DiaTrabalhoSerializer(serializers.ModelSerializer):
         """Meta opções do serializador."""
 
         model = models.DiaTrabalho
-        fields = 'id mês_trabalho dia entrada_manhã saída_manhã entrada_tarde saída_tarde horas_trabalhadas '
-        fields += 'horas_trabalhadas_tupla mês_trabalho_str'
-        fields = fields.split()
+        fields = ['id',
+                  'mês_trabalho',
+                  'mês_trabalho_str',
+                  'dia',
+                  'dia_semana',
+                  'entrada_manhã',
+                  'saída_manhã',
+                  'entrada_tarde',
+                  'saída_tarde',
+                  'horas_trabalhadas',
+                  'horas_trabalhadas_tupla']
 
 
 class MêsTrabalhoSerializer(serializers.ModelSerializer):
     """Serializador de meses."""
 
     carga_horária_str = serializers.StringRelatedField(source='carga_horária')
+    mês = serializers.ReadOnlyField(source='get_mês_display')
 
     class Meta:
         """Meta opções do serializador."""
 
         model = models.MêsTrabalho
-        fields = 'id carga_horária referência horas_trabalhadas horas_trabalhadas_tupla carga_horária_str'
-        fields = fields.split()
+        fields = ['id',
+                  'mês',
+                  'carga_horária',
+                  'carga_horária_str',
+                  'horas_trabalhadas',
+                  'horas_trabalhadas_tupla']
+
+
+class MêsTrabalhoDetailSerializer(MêsTrabalhoSerializer):
+    """Serializador de meses."""
+
+    dias = DiaTrabalhoSerializer(read_only=True, many=True)
+
+    class Meta(MêsTrabalhoSerializer.Meta):
+        """Meta opções do serializador."""
+
+        fields = ['id',
+                  'mês',
+                  'carga_horária',
+                  'carga_horária_str',
+                  'horas_trabalhadas',
+                  'horas_trabalhadas_tupla',
+                  'dias']
 
 
 class CargaHoráriaSerializer(serializers.ModelSerializer):
@@ -45,7 +75,30 @@ class CargaHoráriaSerializer(serializers.ModelSerializer):
         """Meta opções do serializador."""
 
         model = models.CargaHorária
-        fields = 'id ponto ano ponto_str horas_trabalhadas horas_trabalhadas_tupla'.split()
+        fields = ['id',
+                  'ponto',
+                  'ponto_str',
+                  'ano',
+                  'horas_trabalhadas',
+                  'horas_trabalhadas_tupla']
+
+
+class CargaHoráriaDetailSerializer(CargaHoráriaSerializer):
+    """Carga horária serializer."""
+
+    meses = MêsTrabalhoSerializer(read_only=True, many=True)
+
+    class Meta(CargaHoráriaSerializer.Meta):
+        """Meta opções do serializador."""
+
+        model = models.CargaHorária
+        fields = ['id',
+                  'ponto',
+                  'ponto_str',
+                  'ano',
+                  'horas_trabalhadas',
+                  'horas_trabalhadas_tupla',
+                  'meses']
 
 
 class PontoSerializer(serializers.ModelSerializer):
@@ -57,4 +110,7 @@ class PontoSerializer(serializers.ModelSerializer):
         """Meta opções do serializador."""
 
         model = models.Ponto
-        fields = 'id siape dono dono_str'.split()
+        fields = ['id',
+                  'siape',
+                  'dono',
+                  'dono_str']

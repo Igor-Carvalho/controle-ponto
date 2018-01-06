@@ -18,13 +18,14 @@ class ModelsTest(test.TestCase):
         cls.user = get_user_model().objects.create_user('user', 'user@domain.com', 'pass')
         cls.ponto = models.Ponto.objects.create(dono=cls.user, siape='1706059')
         cls.carga_horária = models.CargaHorária.objects.create(ponto=cls.ponto, ano=2018)
-        cls.mês_trabalho = models.MêsTrabalho.objects.create(carga_horária=cls.carga_horária, referência='01')
+        cls.mês_trabalho = models.MêsTrabalho.objects.create(carga_horária=cls.carga_horária, mês='01')
 
     def test_horas_trabalhadas(self):
         """TODO."""
         dia1 = models.DiaTrabalho.objects.create(
             mês_trabalho=self.mês_trabalho,
             dia=1,
+            dia_semana=6,
             entrada_manhã=datetime.datetime(1, 1, 1, 7, 35, 0).time(),
             saída_manhã=datetime.datetime(1, 1, 1, 11, 30, 0).time(),
             entrada_tarde=datetime.datetime(1, 1, 1, 12, 30, 0).time(),
@@ -35,6 +36,7 @@ class ModelsTest(test.TestCase):
         dia2 = models.DiaTrabalho.objects.create(
             mês_trabalho=self.mês_trabalho,
             dia=2,
+            dia_semana=6,
             entrada_manhã=datetime.datetime(1, 1, 1, 7, 25, 0).time(),
             saída_manhã=datetime.datetime(1, 1, 1, 11, 45, 0).time(),
             entrada_tarde=datetime.datetime(1, 1, 1, 12, 45, 0).time(),
@@ -45,6 +47,7 @@ class ModelsTest(test.TestCase):
         dia3 = models.DiaTrabalho.objects.create(
             mês_trabalho=self.mês_trabalho,
             dia=2,
+            dia_semana=6,
             entrada_manhã=datetime.datetime(1, 1, 1, 7, 25, 0).time(),
             saída_manhã=datetime.datetime(1, 1, 1, 11, 45, 0).time(),
             entrada_tarde=datetime.datetime(1, 1, 1, 12, 45, 0).time(),

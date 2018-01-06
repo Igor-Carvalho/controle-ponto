@@ -77,24 +77,24 @@ class MêsTrabalho(utils.CalculadoraTempoMixin, TimeStampedModel):
     class Meta:
         """Meta opções do modelo."""
 
-        ordering = ['referência']
+        ordering = ['mês']
 
-    meses_trabalho = [('01', 'janeiro'),
-                      ('02', 'fevereiro'),
-                      ('03', 'março'),
-                      ('04', 'abril'),
-                      ('05', 'maio'),
-                      ('06', 'junho'),
-                      ('07', 'julho'),
-                      ('08', 'agosto'),
-                      ('09', 'setembro'),
-                      ('10', 'outubro'),
-                      ('11', 'novembro'),
-                      ('12', 'dezembro')]
+    meses_trabalho = [('01', 'Janeiro'),
+                      ('02', 'Fevereiro'),
+                      ('03', 'Março'),
+                      ('04', 'Abril'),
+                      ('05', 'Maio'),
+                      ('06', 'Junho'),
+                      ('07', 'Julho'),
+                      ('08', 'Agosto'),
+                      ('09', 'Setembro'),
+                      ('10', 'Outubro'),
+                      ('11', 'Novembro'),
+                      ('12', 'Dezembro')]
 
     carga_horária = models.ForeignKey(CargaHorária, related_name='meses')
 
-    referência = models.CharField(max_length=2, choices=meses_trabalho, default='01')
+    mês = models.CharField(max_length=2, choices=meses_trabalho, default='01')
 
     histórico = AuditlogHistoryField()
 
@@ -109,7 +109,7 @@ class MêsTrabalho(utils.CalculadoraTempoMixin, TimeStampedModel):
 
     def __str__(self):
         """toString."""
-        msg = f'Mês de trabalho referente a {self.get_referência_display()} de {self.carga_horária.ano} '
+        msg = f'Mês de trabalho referente a {self.get_mês_display()} de {self.carga_horária.ano} '
         msg += f'do servidor siape nº {self.carga_horária.ponto.siape} ({self.carga_horária.ponto.dono})'
         return msg
 
@@ -129,7 +129,18 @@ class DiaTrabalho(utils.CalculadoraTempoMixin, TimeStampedModel):
 
     mês_trabalho = models.ForeignKey(MêsTrabalho, related_name='dias')
 
+    dias_semana = [
+        (6, 'Domingo'),
+        (5, 'Sábado'),
+        (4, 'Sexta-feira'),
+        (3, 'Quinta-feira'),
+        (2, 'Quarta-feira'),
+        (1, 'Terça-feira'),
+        (0, 'Segunda-feira'),
+    ]
+
     dia = models.IntegerField()
+    dia_semana = models.IntegerField(choices=dias_semana)
     entrada_manhã = models.TimeField(default=datetime.time.min)
     saída_manhã = models.TimeField(default=datetime.time.min)
     entrada_tarde = models.TimeField(default=datetime.time.min)
