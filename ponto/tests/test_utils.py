@@ -11,22 +11,24 @@ class CalculadoraTempoMixinTest(unittest.TestCase):
 
     def test_obter_tupla_tempo(self):
         """Verifica se a tupla de tempo é obtida corretamente."""
-        d1, d2 = datetime.datetime(2017, 1, 1), datetime.datetime(2017, 1, 2)
-        ct = utils.CalculadoraTempoMixin().obter_tupla_tempo(d1, d2)
-        self.assertTupleEqual(ct, (24, 0, 0))
+        ct = utils.CalculadoraTempoMixin()
+        ct.horas_trabalhadas = datetime.datetime(1, 1, 2) - datetime.datetime(1, 1, 1)
+        self.assertTupleEqual(ct.horas_trabalhadas_tupla, (24, 0, 0))
 
-        d1, d2 = datetime.datetime(2017, 1, 1), datetime.datetime(2017, 1, 20)
-        ct = utils.CalculadoraTempoMixin().obter_tupla_tempo(d1, d2)
-        self.assertTupleEqual(ct, (19 * 24, 0, 0))
+        ct = utils.CalculadoraTempoMixin()
+        ct.horas_trabalhadas = datetime.datetime(1, 1, 20) - datetime.datetime(1, 1, 1)
+        self.assertTupleEqual(ct.horas_trabalhadas_tupla, (19 * 24, 0, 0))
 
-        d1, d2 = datetime.datetime(2017, 1, 1), datetime.datetime(2017, 1, 2, 15, 24, 12)
-        ct = utils.CalculadoraTempoMixin().obter_tupla_tempo(d1, d2)
-        self.assertTupleEqual(ct, (39, 24, 12))
+        ct = utils.CalculadoraTempoMixin()
+        ct.horas_trabalhadas = datetime.datetime(1, 1, 2, 15, 24, 12) - datetime.datetime(1, 1, 1)
+        self.assertTupleEqual(ct.horas_trabalhadas_tupla, (39, 24, 12))
 
-        d1, d2 = datetime.datetime(2017, 1, 1, 10, 10, 10), datetime.datetime(2017, 1, 2, 15, 24, 12)
-        ct = utils.CalculadoraTempoMixin().obter_tupla_tempo(d1, d2)
-        self.assertTupleEqual(ct, (29, 14, 2))
+        horas_trabalhadas = datetime.datetime(1, 1, 2, 15, 24, 12) - datetime.datetime(1, 1, 1, 10, 10, 10)
+        ct = utils.CalculadoraTempoMixin()
+        ct.horas_trabalhadas = horas_trabalhadas
+        self.assertTupleEqual(ct.horas_trabalhadas_tupla, (29, 14, 2))
 
-        d1, d2 = datetime.datetime(2017, 1, 1, 10, 10, 10), datetime.datetime(2017, 1, 2, 8, 24, 12)
-        ct = utils.CalculadoraTempoMixin().obter_tupla_tempo(d1, d2)
-        self.assertTupleEqual(ct, (22, 14, 2))
+        horas_trabalhadas = datetime.datetime(1, 1, 2, 8, 24, 12) - datetime.datetime(1, 1, 1, 10, 10, 10)
+        ct = utils.CalculadoraTempoMixin()
+        ct.horas_trabalhadas = horas_trabalhadas
+        self.assertTupleEqual(ct.horas_trabalhadas_tupla, (22, 14, 2))
