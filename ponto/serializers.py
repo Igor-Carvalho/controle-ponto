@@ -45,7 +45,7 @@ class CargaHoráriaSerializer(serializers.ModelSerializer):
         """Meta opções do serializador."""
 
         model = models.CargaHorária
-        fields = 'id ponto ano ponto_str'.split()
+        fields = 'id ponto ano ponto_str horas_trabalhadas horas_trabalhadas_tupla'.split()
 
 
 class PontoSerializer(serializers.ModelSerializer):

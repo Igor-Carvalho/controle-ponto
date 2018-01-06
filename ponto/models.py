@@ -38,7 +38,7 @@ class Ponto(TimeStampedModel):
 auditlog.register(Ponto)
 
 
-class CargaHorária(TimeStampedModel):
+class CargaHorária(utils.CalculadoraTempoMixin, TimeStampedModel):
     """Carga horária contendo os meses de trabalho anuais."""
 
     class Meta:
@@ -51,6 +51,15 @@ class CargaHorária(TimeStampedModel):
     ano = models.IntegerField()
 
     histórico = AuditlogHistoryField()
+
+    @property
+    def horas_trabalhadas(self):
+        """Horas trabalhadas totais dessa carga horária."""
+        total = datetime.timedelta()
+        for mês in self.meses.all():
+            total += mês.horas_trabalhadas
+
+        return total
 
     def __str__(self):
         """toString."""
