@@ -20,7 +20,7 @@ class Ponto(TimeStampedModel):
     class Meta:
         """Meta opções do modelo."""
 
-        ordering = ['-id']
+        ordering = ['id']
 
     dono = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='pontos')
 
@@ -44,7 +44,7 @@ class CargaHorária(TimeStampedModel):
     class Meta:
         """Meta opções do modelo."""
 
-        ordering = ['-id']
+        ordering = ['ano']
 
     ponto = models.ForeignKey(Ponto, related_name='carga_horária')
 
@@ -68,7 +68,7 @@ class MêsTrabalho(utils.CalculadoraTempoMixin, TimeStampedModel):
     class Meta:
         """Meta opções do modelo."""
 
-        ordering = ['-id']
+        ordering = ['referência']
 
     meses_trabalho = [('01', 'janeiro'),
                       ('02', 'fevereiro'),
@@ -116,7 +116,7 @@ class DiaTrabalho(utils.CalculadoraTempoMixin, TimeStampedModel):
     class Meta:
         """Meta opções do modelo."""
 
-        ordering = ['-id']
+        ordering = ['dia']
 
     mês = models.ForeignKey(MêsTrabalho, related_name='dias')
 
