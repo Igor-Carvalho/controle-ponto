@@ -127,7 +127,7 @@ class DiaTrabalho(utils.CalculadoraTempoMixin, TimeStampedModel):
 
         ordering = ['dia']
 
-    mês = models.ForeignKey(MêsTrabalho, related_name='dias')
+    mês_trabalho = models.ForeignKey(MêsTrabalho, related_name='dias')
 
     dia = models.IntegerField()
     entrada_manhã = models.TimeField(default=datetime.time.min)

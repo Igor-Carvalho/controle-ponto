@@ -12,14 +12,14 @@ logger = logging.getLogger(__name__)
 class DiaTrabalhoSerializer(serializers.ModelSerializer):
     """Serializador de dias."""
 
-    mês_str = serializers.StringRelatedField(source='mês')
+    mês_trabalho_str = serializers.StringRelatedField(source='mês_trabalho')
 
     class Meta:
         """Meta opções do serializador."""
 
         model = models.DiaTrabalho
-        fields = 'id mês dia entrada_manhã saída_manhã entrada_tarde saída_tarde horas_trabalhadas '
-        fields += 'horas_trabalhadas_tupla mês_str'
+        fields = 'id mês_trabalho dia entrada_manhã saída_manhã entrada_tarde saída_tarde horas_trabalhadas '
+        fields += 'horas_trabalhadas_tupla mês_trabalho_str'
         fields = fields.split()
 
 

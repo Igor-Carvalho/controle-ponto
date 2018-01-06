@@ -23,7 +23,7 @@ class ModelsTest(test.TestCase):
     def test_horas_trabalhadas(self):
         """TODO."""
         dia1 = models.DiaTrabalho.objects.create(
-            mês=self.mês_trabalho,
+            mês_trabalho=self.mês_trabalho,
             dia=1,
             entrada_manhã=datetime.datetime(1, 1, 1, 7, 35, 0).time(),
             saída_manhã=datetime.datetime(1, 1, 1, 11, 30, 0).time(),
@@ -33,7 +33,7 @@ class ModelsTest(test.TestCase):
         self.assertEqual(dia1.horas_trabalhadas_tupla, (9, 14, 0))
 
         dia2 = models.DiaTrabalho.objects.create(
-            mês=self.mês_trabalho,
+            mês_trabalho=self.mês_trabalho,
             dia=2,
             entrada_manhã=datetime.datetime(1, 1, 1, 7, 25, 0).time(),
             saída_manhã=datetime.datetime(1, 1, 1, 11, 45, 0).time(),
@@ -43,7 +43,7 @@ class ModelsTest(test.TestCase):
         self.assertEqual(dia2.horas_trabalhadas_tupla, (8, 24, 0))
 
         dia3 = models.DiaTrabalho.objects.create(
-            mês=self.mês_trabalho,
+            mês_trabalho=self.mês_trabalho,
             dia=2,
             entrada_manhã=datetime.datetime(1, 1, 1, 7, 25, 0).time(),
             saída_manhã=datetime.datetime(1, 1, 1, 11, 45, 0).time(),
