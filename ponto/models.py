@@ -30,7 +30,7 @@ class Ponto(TimeStampedModel):
 
     def __str__(self):
         """toString."""
-        return f'Ponto de trabalho referente ao servidor siape nº {self.siape}'
+        return f'Ponto de trabalho referente ao servidor siape nº {self.siape} ({self.dono})'
 
     __repr__ = __str__
 
