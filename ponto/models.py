@@ -54,7 +54,7 @@ class CargaHorária(TimeStampedModel):
 
     def __str__(self):
         """toString."""
-        return f'Carga horária referente ao ano {self.ano} do servidor siape nº {self.ponto.dono}'
+        return f'Carga horária referente ao ano {self.ano} do servidor siape nº {self.ponto.siape}'
 
     __repr__ = __str__
 
