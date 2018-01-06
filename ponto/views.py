@@ -20,13 +20,13 @@ class PontoViewSet(PontoBaseViewSet):
     permission_classes = (permissions.PontoDonoPermission,)
 
     @decorators.list_route(methods=['post'], url_path='inicializar-ponto')
-    def inicializar_ponto(self, pk=None):
+    def inicializar_ponto(self, request):
         """Cria um ponto referente ao ano que o usuário acessa a app."""
         cal = calendar.Calendar(6)
-        ano = self.request.query_params.get('ano', None) or datetime.date.today().year
+        ano = request.query_params.get('ano', None) or datetime.date.today().year
         ano = int(ano)
 
-        ponto = models.Ponto.objects.get_or_create(dono=self.request.user)[0]
+        ponto = models.Ponto.objects.get_or_create(dono=request.user)[0]
         carga_horária, created = models.CargaHorária.objects.get_or_create(ponto=ponto, ano=ano)
 
         if created:
@@ -39,7 +39,10 @@ class PontoViewSet(PontoBaseViewSet):
                         models.DiaTrabalho.objects.get_or_create(mês_trabalho=mês_trabalho,
                                                                  dia=dia, dia_semana=dia_semana)
 
-        return response.Response({'detail': 'Ponto inicializado com sucesso.'})
+            return response.Response({'detail': 'Carga horária inicializada com sucesso.'})
+
+        else:
+            return response.Response({'detail': 'Carga horária já foi inicializada.'})
 
     def perform_create(self, serializer):
         """Adiciona o usuário atual como dono do recurso."""
