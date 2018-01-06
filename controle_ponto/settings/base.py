@@ -63,6 +63,7 @@ THIRD_PARTY_APPS = [
 
 PROJECT_APPS = [
     'core.apps.CoreConfig',
+    'ponto.apps.PontoConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
@@ -207,7 +208,7 @@ LOGGING = {
     },
     'handlers': {
         'console': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
         },
@@ -243,6 +244,11 @@ LOGGING = {
         },
         'py.warnings': {
             'handlers': ['console'],
+        },
+        'ponto': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False
         },
     }
 }
