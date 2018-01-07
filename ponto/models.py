@@ -17,16 +17,16 @@ logger = logging.getLogger(__name__)
 class Ponto(TimeStampedModel):
     """Histórico completo da jornada de trabalho do servidor ao logo dos anos."""
 
-    class Meta:
-        """Meta opções do modelo."""
-
-        ordering = ['id']
-
     dono = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='pontos')
 
     siape = models.CharField(max_length=16)
 
     histórico = AuditlogHistoryField()
+
+    class Meta:
+        """Meta opções do modelo."""
+
+        ordering = ['id']
 
     def __str__(self):
         """toString."""
@@ -41,16 +41,16 @@ auditlog.register(Ponto)
 class CargaHorária(utils.CalculadoraTempoMixin, TimeStampedModel):
     """Carga horária contendo os meses de trabalho anuais."""
 
-    class Meta:
-        """Meta opções do modelo."""
-
-        ordering = ['ano']
-
     ponto = models.ForeignKey(Ponto, related_name='carga_horária')
 
     ano = models.IntegerField()
 
     histórico = AuditlogHistoryField()
+
+    class Meta:
+        """Meta opções do modelo."""
+
+        ordering = ['ano']
 
     @property
     def horas_trabalhadas(self):
@@ -74,29 +74,29 @@ auditlog.register(CargaHorária)
 class MêsTrabalho(utils.CalculadoraTempoMixin, TimeStampedModel):
     """Um mês de trabalho referente a uma carga horária mensal."""
 
+    meses_trabalho = [(1, 'Janeiro'),
+                      (2, 'Fevereiro'),
+                      (3, 'Março'),
+                      (4, 'Abril'),
+                      (5, 'Maio'),
+                      (6, 'Junho'),
+                      (7, 'Julho'),
+                      (8, 'Agosto'),
+                      (9, 'Setembro'),
+                      (10, 'Outubro'),
+                      (11, 'Novembro'),
+                      (12, 'Dezembro')]
+
+    carga_horária = models.ForeignKey(CargaHorária, related_name='meses')
+
+    mês = models.IntegerField(choices=meses_trabalho)
+
+    histórico = AuditlogHistoryField()
+
     class Meta:
         """Meta opções do modelo."""
 
         ordering = ['mês']
-
-    meses_trabalho = [('01', 'Janeiro'),
-                      ('02', 'Fevereiro'),
-                      ('03', 'Março'),
-                      ('04', 'Abril'),
-                      ('05', 'Maio'),
-                      ('06', 'Junho'),
-                      ('07', 'Julho'),
-                      ('08', 'Agosto'),
-                      ('09', 'Setembro'),
-                      ('10', 'Outubro'),
-                      ('11', 'Novembro'),
-                      ('12', 'Dezembro')]
-
-    carga_horária = models.ForeignKey(CargaHorária, related_name='meses')
-
-    mês = models.CharField(max_length=2, choices=meses_trabalho, default='01')
-
-    histórico = AuditlogHistoryField()
 
     @property
     def horas_trabalhadas(self):
@@ -122,13 +122,6 @@ auditlog.register(MêsTrabalho)
 class DiaTrabalho(utils.CalculadoraTempoMixin, TimeStampedModel):
     """Um mês de trabalho referente a uma carga horária mensal."""
 
-    class Meta:
-        """Meta opções do modelo."""
-
-        ordering = ['dia']
-
-    mês_trabalho = models.ForeignKey(MêsTrabalho, related_name='dias')
-
     dias_semana = [
         (6, 'Domingo'),
         (5, 'Sábado'),
@@ -139,6 +132,8 @@ class DiaTrabalho(utils.CalculadoraTempoMixin, TimeStampedModel):
         (0, 'Segunda-feira'),
     ]
 
+    mês_trabalho = models.ForeignKey(MêsTrabalho, related_name='dias')
+
     dia = models.IntegerField()
     dia_semana = models.IntegerField(choices=dias_semana)
     entrada_manhã = models.TimeField(default=datetime.time.min)
@@ -148,6 +143,11 @@ class DiaTrabalho(utils.CalculadoraTempoMixin, TimeStampedModel):
     observação = models.TextField()
 
     histórico = AuditlogHistoryField()
+
+    class Meta:
+        """Meta opções do modelo."""
+
+        ordering = ['dia']
 
     @property
     def horas_trabalhadas(self):

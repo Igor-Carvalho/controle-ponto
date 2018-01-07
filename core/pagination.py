@@ -6,7 +6,7 @@ from rest_framework import pagination, response
 class CorePaginator(pagination.PageNumberPagination):
     """Paginador com chaves extras."""
 
-    page_size_query_param = 'page_size'
+    page_size_query_param = 'page-size'
 
     def get_paginated_response(self, data):
         """Inclui chaves extras na resposta."""
