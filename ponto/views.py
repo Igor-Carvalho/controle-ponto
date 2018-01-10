@@ -39,6 +39,7 @@ class CargaHoráriaViewSet(PontoBaseViewSet):
     queryset = models.CargaHorária.objects.all()
     serializer_class = serializers.CargaHoráriaSerializer
     permission_classes = (permissions.CargaHoráriaPermission,)
+    filter_fields = ['ano']
 
     def get_queryset(self):
         """Obtém a lista de dias para o usuário dono."""
@@ -62,6 +63,7 @@ class MêsTrabalhoViewSet(PontoBaseViewSet):
     queryset = models.MêsTrabalho.objects.all()
     serializer_class = serializers.MêsTrabalhoSerializer
     permission_classes = (permissions.MêsTrabalhoPermission,)
+    filter_fields = ['carga_horária']
 
     def get_queryset(self):
         """Obtém a lista de dias para o usuário dono."""
@@ -69,7 +71,7 @@ class MêsTrabalhoViewSet(PontoBaseViewSet):
         if not self.request.user.is_superuser:
             queryset = queryset.filter(carga_horária__ponto__dono=self.request.user)
 
-        return queryset
+        return queryset.distinct()
 
     def get_serializer_class(self):
         """Obtém um serializador diferente para exibir mais detalhes sobre o mês trabalho."""

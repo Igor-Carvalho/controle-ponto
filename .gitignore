@@ -113,3 +113,6 @@ venv.bak/
 # node
 bower_components/
 node_modules/
+
+# editors
+.vscode

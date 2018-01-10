@@ -2,8 +2,36 @@
 
 {% block content %}
   <div class="row" id="row" v-cloak>
-    <div class="col-lg-4">
-      <b-alert show>[[ mensagem ]]</b-alert>
+    <div class="col-lg-8">
+      <table class="table table-bordered table-striped table-sm">
+        <legend>
+          [[ mes.mês ]] ([[ mes.carga_horária_str ]])
+        </legend>
+
+        <thead>
+          <tr>
+            <th>Dia</th>
+            <th>Dia</th>
+            <th>Entrada Manhã</th>
+            <th>Saída Manhã</th>
+            <th>Entrada Tarde</th>
+            <th>Saída Tarde</th>
+            <th>Horas Trabalhadas</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="dia in mes.dias" v-init="calcularHorasDia(dia)">
+            <td>[[ dia.dia_semana ]]</td>
+            <td>[[ dia.dia ]]</td>
+            <td><input type="time" v-model="dia.entrada_manhã"></td>
+            <td><input type="time" v-model="dia.saída_manhã"></td>
+            <td><input type="time" v-model="dia.entrada_tarde"></td>
+            <td><input type="time" v-model="dia.saída_tarde"></td>
+            <td>[[ dia.horas_trabalhadas ]]</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>  
 {% endblock content %}
@@ -15,8 +43,39 @@
       delimiters: ['[[', ']]'],
       data() {
         return {
-          mensagem: 'Olá mundo!'
+          carga_horária: {},
+          meses: {},
+          mes: {}
         }
+      },
+      methods: {
+        carregarCargaHorária() {
+          const self = this;
+          axios.get('/api/v1/carga-hor%C3%A1ria/?ano=2018').then(response => {
+            self.carga_horária = response.data[0];
+            axios.get(`/api/v1/meses/?carga_horária=${self.carga_horária.id}`).then(response => {
+              self.meses = response.data;
+              axios.get(`/api/v1/meses/${self.meses[0].id}/`).then(response => {
+                self.mes = response.data;
+              }).catch(error => {
+                console.log(error);
+              })
+            }).catch(error => {
+              console.log(error);
+            });
+          }).catch(error => {
+            console.log(error);
+          });
+        },
+        calcularHorasDia(dia) {
+          const total = (Date.parse(`1/1/1 ${dia.saída_manhã}`) - Date.parse(`1/1/1 ${dia.entrada_manhã}`)) +
+              (Date.parse(`1/1/1 ${dia.saída_tarde}`) - Date.parse(`1/1/1 ${dia.entrada_tarde}`) - 86400000);
+
+          dia.horas_trabalhadas = new Date(total + 10800000).toLocaleString('en-GB', {hour: '2-digit', minute: '2-digit'});
+        }
+      },
+      mounted() {
+        this.carregarCargaHorária();
       }
     });
   </script>
