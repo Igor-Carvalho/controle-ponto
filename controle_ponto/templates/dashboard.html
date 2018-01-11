@@ -1,89 +1,111 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block content %}
+<div class="row" id="row" v-cloak>
+  <div class="col-lg-10">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" v-for="i in data.page_range">
+          <a class="nav-link" :class="{'active': page === i}" data-toggle="tab" href="#page[[ i ]]" @click="carregarCargaHorária(i)">[[ mêsNúmero(i) ]]</a>
+        </li>
+      </ul>
 
-{% block content %}
-  <div class="row" id="row" v-cloak>
-    <div class="col-lg-8">
-      <table class="table table-bordered table-striped table-sm">
-        <legend>
-          [[ mes.mês ]] ([[ mes.carga_horária_str ]])
-        </legend>
+      <div class="tab-content">
+        <div class="tab-pane active" id="page[[ i ]]" role="tabpanel">
+          <table class="table table-bordered table-striped table-sm">
+            <legend>
+              [[ mes.mês ]] - [[ mes.carga_horária_str ]] - [[ mes.horas_trabalhadas_str ]]
+            </legend>
 
-        <thead>
-          <tr>
-            <th>Dia</th>
-            <th>Dia</th>
-            <th>Entrada Manhã</th>
-            <th>Saída Manhã</th>
-            <th>Entrada Tarde</th>
-            <th>Saída Tarde</th>
-            <th>Horas Trabalhadas</th>
-            <th>Observação</th>
-          </tr>
-        </thead>
+            <thead>
+              <tr>
+                <th>Dia</th>
+                <th>Dia</th>
+                <th>Entrada Manhã</th>
+                <th>Saída Manhã</th>
+                <th>Entrada Tarde</th>
+                <th>Saída Tarde</th>
+                <th>Horas Trabalhadas</th>
+                <th>Observação</th>
+              </tr>
+            </thead>
 
-        <tbody>
-          <tr v-for="dia in mes.dias" :key="dia.id">
-            <td>[[ dia.dia_semana ]]</td>
-            <td>[[ dia.dia ]]</td>
-            <td><input type="datetime" v-model="dia.entrada_manhã" @blur="atualizarDia(dia, {'entrada_manhã': dia.entrada_manhã})"></td>
-            <td><input type="datetime" v-model="dia.saída_manhã" @blur="atualizarDia(dia, {'saída_manhã': dia.saída_manhã})"></td>
-            <td><input type="datetime" v-model="dia.entrada_tarde" @blur="atualizarDia(dia, {'entrada_tarde': dia.entrada_tarde})"></td>
-            <td><input type="datetime" v-model="dia.saída_tarde" @blur="atualizarDia(dia, {'saída_tarde': dia.saída_tarde})"></td>
-            <td><strong>[[ dia.horas_trabalhadas_str ]]</strong></td>
-            <td>
-              <select name="" id="">
-                <option value="">---</option>
-                <option value="feriado">FERIADO</option>
-              </select>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            <tbody>
+              <tr v-for="dia in mes.dias" :key="dia.id">
+                <td>[[ dia.dia_semana ]]</td>
+                <td>[[ dia.dia ]]</td>
+                <td>
+                  <input type="datetime" v-model="dia.entrada_manhã" @blur="atualizarDia(dia, {'entrada_manhã': dia.entrada_manhã})">
+                </td>
+                <td>
+                  <input type="datetime" v-model="dia.saída_manhã" @blur="atualizarDia(dia, {'saída_manhã': dia.saída_manhã})">
+                </td>
+                <td>
+                  <input type="datetime" v-model="dia.entrada_tarde" @blur="atualizarDia(dia, {'entrada_tarde': dia.entrada_tarde})">
+                </td>
+                <td>
+                  <input type="datetime" v-model="dia.saída_tarde" @blur="atualizarDia(dia, {'saída_tarde': dia.saída_tarde})">
+                </td>
+                <td>
+                  <strong>[[ dia.horas_trabalhadas_str ]]</strong>
+                </td>
+                <td>
+                  <select name="" id="">
+                    <option value="">---</option>
+                    <option value="feriado">FERIADO</option>
+                    <option value="atestado_manhã">ATESTADO MANHÃ</option>
+                    <option value="atestado_tarde">ATESTADO TARDE</option>
+                    <option value="falta">FALTA</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
     </div>
-  </div>  
-{% endblock content %}
-
-{% block local_scripts %}
-  <script>
-    const v = new Vue({
-      el: '#row',
-      delimiters: ['[[', ']]'],
-      data() {
-        return {
-          carga_horária: {},
-          meses: {},
-          mes: {},
-        }
-      },
-      methods: {
-        carregarCargaHorária() {
-          const self = this;
-          axios.get('/api/v1/carga-hor%C3%A1ria/?ano=2018').then(response => {
-            self.carga_horária = response.data[0];
-            axios.get(`/api/v1/meses/?carga_horária=${self.carga_horária.id}`).then(response => {
-              self.meses = response.data;
-              axios.get(`/api/v1/meses/${self.meses[0].id}/`).then(response => {
-                self.mes = response.data;
-              }).catch(error => {
-                console.log(error);
-              })
-            }).catch(error => {
-              console.log(error);
-            });
-          }).catch(error => {
-            console.log(error);
-          });
-        },
-        atualizarDia(dia, params) {
-          axios.patch(`/api/v1/dias/${dia.id}/`, params).then(response => {
-            const index = _.findIndex(this.mes.dias, (d) => d.id === dia.id);
-            this.mes.dias.splice(index, 1, response.data);
-          });
-        }
-      },
-      mounted() {
-        this.carregarCargaHorária();
+  </div>
+</div>
+{% endblock content %} {% block local_scripts %}
+<script>
+  const v = new Vue({
+    el: '#row',
+    delimiters: ['[[', ']]'],
+    data() {
+      return {
+        data: {},
+        mes: {},
+        page: 1
       }
-    });
-  </script>
-{% endblock local_scripts %}
+    },
+    methods: {
+      carregarCargaHorária(page) {
+        this.page = page;
+        axios.get(`/api/v1/meses/?carga_horária__ano=2018&page-size=1&page=${page}`).then(response => {
+          this.data = response.data;
+          this.mes = this.data.results[0];
+        });
+      },
+      atualizarDia(dia, params) {
+        axios.patch(`/api/v1/dias/${dia.id}/`, params).then(response => {
+          this.carregarCargaHorária(this.page);
+        });
+      },
+      mêsNúmero(page) {
+        return {
+          1: 'Janeiro',
+          2: 'Fevereiro',
+          3: 'Março',
+          4: 'Abril',
+          5: 'Maio',
+          6: 'Junho',
+          7: 'Julho',
+          8: 'Agosto',
+          9: 'Setembro',
+          10: 'Outubro',
+          11: 'Novembro',
+          12: 'Dezembro'
+        }[page];
+      }
+    },
+    mounted() {
+      this.carregarCargaHorária(1);
+    }
+  });
+</script> {% endblock local_scripts %}

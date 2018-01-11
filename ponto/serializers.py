@@ -35,6 +35,7 @@ class MêsTrabalhoSerializer(serializers.ModelSerializer):
 
     carga_horária_str = serializers.StringRelatedField(source='carga_horária')
     mês = serializers.ReadOnlyField(source='get_mês_display')
+    dias = DiaTrabalhoSerializer(read_only=True, many=True)
 
     class Meta:
         """Meta opções do serializador."""
@@ -45,7 +46,8 @@ class MêsTrabalhoSerializer(serializers.ModelSerializer):
                   'carga_horária',
                   'carga_horária_str',
                   'horas_trabalhadas',
-                  'horas_trabalhadas_str']
+                  'horas_trabalhadas_str',
+                  'dias']
 
 
 class MêsTrabalhoDetailSerializer(MêsTrabalhoSerializer):

@@ -2,6 +2,8 @@
 
 from rest_framework import generics, viewsets
 
+from core.pagination import CorePaginator
+
 from . import models, permissions, serializers
 
 
@@ -63,7 +65,8 @@ class MêsTrabalhoViewSet(PontoBaseViewSet):
     queryset = models.MêsTrabalho.objects.all()
     serializer_class = serializers.MêsTrabalhoSerializer
     permission_classes = (permissions.MêsTrabalhoPermission,)
-    filter_fields = ['carga_horária']
+    pagination_class = CorePaginator
+    filter_fields = ['carga_horária__ano']
 
     def get_queryset(self):
         """Obtém a lista de dias para o usuário dono."""
