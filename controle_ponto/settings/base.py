@@ -213,6 +213,10 @@ LOGGING = {
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
         },
+        'dev_console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
         'mail_admins': {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
@@ -247,7 +251,7 @@ LOGGING = {
             'handlers': ['console'],
         },
         'ponto': {
-            'handlers': ['console'],
+            'handlers': ['console', 'dev_console'],
             'level': 'DEBUG',
             'propagate': False
         },
