@@ -27,7 +27,7 @@ class DiaTrabalhoSerializer(serializers.ModelSerializer):
                   'entrada_tarde',
                   'saída_tarde',
                   'horas_trabalhadas',
-                  'horas_trabalhadas_tupla']
+                  'horas_trabalhadas_str']
 
 
 class MêsTrabalhoSerializer(serializers.ModelSerializer):
@@ -45,7 +45,7 @@ class MêsTrabalhoSerializer(serializers.ModelSerializer):
                   'carga_horária',
                   'carga_horária_str',
                   'horas_trabalhadas',
-                  'horas_trabalhadas_tupla']
+                  'horas_trabalhadas_str']
 
 
 class MêsTrabalhoDetailSerializer(MêsTrabalhoSerializer):
@@ -61,7 +61,7 @@ class MêsTrabalhoDetailSerializer(MêsTrabalhoSerializer):
                   'carga_horária',
                   'carga_horária_str',
                   'horas_trabalhadas',
-                  'horas_trabalhadas_tupla',
+                  'horas_trabalhadas_str',
                   'dias']
 
 
@@ -79,7 +79,7 @@ class CargaHoráriaSerializer(serializers.ModelSerializer):
                   'ponto_str',
                   'ano',
                   'horas_trabalhadas',
-                  'horas_trabalhadas_tupla']
+                  'horas_trabalhadas_str']
 
 
 class CargaHoráriaDetailSerializer(CargaHoráriaSerializer):
@@ -96,7 +96,7 @@ class CargaHoráriaDetailSerializer(CargaHoráriaSerializer):
                   'ponto_str',
                   'ano',
                   'horas_trabalhadas',
-                  'horas_trabalhadas_tupla',
+                  'horas_trabalhadas_str',
                   'meses']
 
 

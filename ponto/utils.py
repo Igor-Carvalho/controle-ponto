@@ -5,7 +5,7 @@ class CalculadoraTempoMixin:
     """Mixin para o cálculo de horas."""
 
     @property
-    def horas_trabalhadas_tupla(self):
+    def horas_trabalhadas_str(self):
         """Calcula as horas trabalhadas deste dia."""
         minuto = 60
         hora = 60 * minuto
@@ -25,4 +25,4 @@ class CalculadoraTempoMixin:
             total_segundos -= minuto
             minutos += 1
 
-        return (horas, minutos, total_segundos)
+        return f'{horas:02d}:{minutos:02d}:{total_segundos:02d}'

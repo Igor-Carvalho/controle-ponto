@@ -18,9 +18,7 @@ class Ponto(TimeStampedModel):
     """Histórico completo da jornada de trabalho do servidor ao logo dos anos."""
 
     dono = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='pontos')
-
     siape = models.CharField(max_length=16)
-
     histórico = AuditlogHistoryField()
 
     class Meta:
@@ -42,9 +40,7 @@ class CargaHorária(utils.CalculadoraTempoMixin, TimeStampedModel):
     """Carga horária contendo os meses de trabalho anuais."""
 
     ponto = models.ForeignKey(Ponto, related_name='carga_horária')
-
     ano = models.IntegerField()
-
     histórico = AuditlogHistoryField()
 
     class Meta:
@@ -88,9 +84,7 @@ class MêsTrabalho(utils.CalculadoraTempoMixin, TimeStampedModel):
                       (12, 'Dezembro')]
 
     carga_horária = models.ForeignKey(CargaHorária, related_name='meses')
-
     mês = models.IntegerField(choices=meses_trabalho)
-
     histórico = AuditlogHistoryField()
 
     class Meta:
@@ -157,7 +151,14 @@ class DiaTrabalho(utils.CalculadoraTempoMixin, TimeStampedModel):
 
         entrada_tarde = datetime.datetime.combine(datetime.date.min, self.entrada_tarde)
         saída_tarde = datetime.datetime.combine(datetime.date.min, self.saída_tarde)
-        return saída_tarde - entrada_tarde + saída_manhã - entrada_manhã
+
+        # normalmente esses erros de conversão acontecem devido a dados enviados pelo cliente. Por enquanto,
+        # são ignorados.
+        try:
+            return saída_tarde - entrada_tarde + saída_manhã - entrada_manhã
+
+        except Exception as e:
+            return '00:00:00'
 
     def __str__(self):
         """toString."""

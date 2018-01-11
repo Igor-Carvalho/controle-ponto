@@ -17,18 +17,25 @@
             <th>Entrada Tarde</th>
             <th>Saída Tarde</th>
             <th>Horas Trabalhadas</th>
+            <th>Observação</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr v-for="dia in mes.dias" v-init="calcularHorasDia(dia)">
+          <tr v-for="dia in mes.dias" :key="dia.id">
             <td>[[ dia.dia_semana ]]</td>
             <td>[[ dia.dia ]]</td>
-            <td><input type="time" v-model="dia.entrada_manhã"></td>
-            <td><input type="time" v-model="dia.saída_manhã"></td>
-            <td><input type="time" v-model="dia.entrada_tarde"></td>
-            <td><input type="time" v-model="dia.saída_tarde"></td>
-            <td>[[ dia.horas_trabalhadas ]]</td>
+            <td><input type="datetime" v-model="dia.entrada_manhã" @blur="atualizarDia(dia, {'entrada_manhã': dia.entrada_manhã})"></td>
+            <td><input type="datetime" v-model="dia.saída_manhã" @blur="atualizarDia(dia, {'saída_manhã': dia.saída_manhã})"></td>
+            <td><input type="datetime" v-model="dia.entrada_tarde" @blur="atualizarDia(dia, {'entrada_tarde': dia.entrada_tarde})"></td>
+            <td><input type="datetime" v-model="dia.saída_tarde" @blur="atualizarDia(dia, {'saída_tarde': dia.saída_tarde})"></td>
+            <td><strong>[[ dia.horas_trabalhadas_str ]]</strong></td>
+            <td>
+              <select name="" id="">
+                <option value="">---</option>
+                <option value="feriado">FERIADO</option>
+              </select>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -45,7 +52,7 @@
         return {
           carga_horária: {},
           meses: {},
-          mes: {}
+          mes: {},
         }
       },
       methods: {
@@ -67,11 +74,11 @@
             console.log(error);
           });
         },
-        calcularHorasDia(dia) {
-          const total = (Date.parse(`1/1/1 ${dia.saída_manhã}`) - Date.parse(`1/1/1 ${dia.entrada_manhã}`)) +
-              (Date.parse(`1/1/1 ${dia.saída_tarde}`) - Date.parse(`1/1/1 ${dia.entrada_tarde}`) - 86400000);
-
-          dia.horas_trabalhadas = new Date(total + 10800000).toLocaleString('en-GB', {hour: '2-digit', minute: '2-digit'});
+        atualizarDia(dia, params) {
+          axios.patch(`/api/v1/dias/${dia.id}/`, params).then(response => {
+            const index = _.findIndex(this.mes.dias, (d) => d.id === dia.id);
+            this.mes.dias.splice(index, 1, response.data);
+          });
         }
       },
       mounted() {
