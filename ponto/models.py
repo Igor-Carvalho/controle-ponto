@@ -146,15 +146,14 @@ class DiaTrabalho(utils.CalculadoraTempoMixin, TimeStampedModel):
     @property
     def horas_trabalhadas(self):
         """TODO."""
-        entrada_manhã = datetime.datetime.combine(datetime.date.min, self.entrada_manhã)
-        saída_manhã = datetime.datetime.combine(datetime.date.min, self.saída_manhã)
-
-        entrada_tarde = datetime.datetime.combine(datetime.date.min, self.entrada_tarde)
-        saída_tarde = datetime.datetime.combine(datetime.date.min, self.saída_tarde)
-
         # normalmente esses erros de conversão acontecem devido a dados enviados pelo cliente. Por enquanto,
         # são ignorados.
         try:
+            entrada_manhã = datetime.datetime.combine(datetime.date.min, self.entrada_manhã)
+            saída_manhã = datetime.datetime.combine(datetime.date.min, self.saída_manhã)
+
+            entrada_tarde = datetime.datetime.combine(datetime.date.min, self.entrada_tarde)
+            saída_tarde = datetime.datetime.combine(datetime.date.min, self.saída_tarde)
             return saída_tarde - entrada_tarde + saída_manhã - entrada_manhã
 
         except Exception as e:
