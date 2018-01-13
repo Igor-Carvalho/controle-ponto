@@ -31,7 +31,7 @@ class ModelsTest(test.TestCase):
             entrada_tarde=datetime.datetime(1, 1, 1, 12, 30, 0).time(),
             saída_tarde=datetime.datetime(1, 1, 1, 17, 49, 0).time(),
         )
-        self.assertEqual(dia1.horas_trabalhadas_tupla, (9, 14, 0))
+        self.assertEqual(dia1.horas_trabalhadas_str, '09:14:00')
 
         dia2 = models.DiaTrabalho.objects.create(
             mês_trabalho=self.mês_trabalho,
@@ -42,7 +42,7 @@ class ModelsTest(test.TestCase):
             entrada_tarde=datetime.datetime(1, 1, 1, 12, 45, 0).time(),
             saída_tarde=datetime.datetime(1, 1, 1, 16, 49, 0).time(),
         )
-        self.assertEqual(dia2.horas_trabalhadas_tupla, (8, 24, 0))
+        self.assertEqual(dia2.horas_trabalhadas_str, '08:24:00')
 
         dia3 = models.DiaTrabalho.objects.create(
             mês_trabalho=self.mês_trabalho,
@@ -53,6 +53,6 @@ class ModelsTest(test.TestCase):
             entrada_tarde=datetime.datetime(1, 1, 1, 12, 45, 0).time(),
             saída_tarde=datetime.datetime(1, 1, 1, 16, 49, 0).time(),
         )
-        self.assertEqual(dia3.horas_trabalhadas_tupla, (8, 24, 0))
+        self.assertEqual(dia3.horas_trabalhadas_str, '08:24:00')
 
-        self.assertEqual(self.mês_trabalho.horas_trabalhadas_tupla, (26, 2, 0))
+        self.assertEqual(self.mês_trabalho.horas_trabalhadas_str, '26:02:00')

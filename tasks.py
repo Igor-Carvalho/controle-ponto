@@ -31,9 +31,9 @@ def run_server(ctx, noinput=True, clear=False, verbosity=0, settings='developmen
 
 
 @invoke.task
-def test(ctx, tests='', settings='test'):
+def test(ctx, package='', settings='test'):
     """Testa as aplicações do projeto (com exceção dos testes funcionais)."""
-    cmd = 'coverage run ./manage.py test {} --settings=controle_ponto.settings.{}'.format(tests, settings)
+    cmd = 'coverage run ./manage.py test {} --settings=controle_ponto.settings.{}'.format(package, settings)
     ctx.run(cmd, echo=True, pty=True)
     cmd = 'coverage report'
     ctx.run(cmd, echo=True, pty=True)

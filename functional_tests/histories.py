@@ -26,3 +26,12 @@ class FunctionalTests(LiveServerTestCase):
     def get_live_url(self, url_name):
         """Obtém url_name em relação ao servidor de testes."""
         return '{}{}'.format(self.live_server_url, reverse(url_name))
+
+
+class LoginTest(FunctionalTests):
+    """Testes para página de login."""
+
+    def test_título_login(self):
+        """Verifica o título da página de login."""
+        self.driver.get(self.get_live_url('dashboard'))
+        self.assertEqual(self.driver.title, 'Login')
