@@ -1,6 +1,6 @@
 """Configurações de produção."""
 
-from .staging import *  # noqa
+from .staging import *  # noqa: F401, F403
 
 # Security
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
