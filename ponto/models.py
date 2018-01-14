@@ -9,7 +9,7 @@ from django.conf import settings
 from django.db import models
 from model_utils.models import TimeStampedModel
 
-from . import utils
+from . import managers, utils
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +20,8 @@ class Ponto(TimeStampedModel):
     dono = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='pontos')
     siape = models.CharField(max_length=16)
     histórico = AuditlogHistoryField()
+
+    objects = managers.PontoManager()
 
     class Meta:
         """Meta opções do modelo."""
