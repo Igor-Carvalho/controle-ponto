@@ -3,12 +3,12 @@
   <div class="col-lg-10">
       <ul class="nav nav-tabs">
         <li class="nav-item" v-for="i in data.page_range">
-          <a class="nav-link" :class="{'active': page === i}" data-toggle="tab" href="#page[[ i ]]" @click="carregarCargaHorária(i)">[[ mêsNúmero(i) ]]</a>
+          <a class="nav-link" :class="{'active': page === i}" data-toggle="tab" href="#page" @click="carregarCargaHorária(i)">[[ mêsNúmero(i) ]]</a>
         </li>
       </ul>
 
       <div class="tab-content">
-        <div class="tab-pane active" id="page[[ i ]]" role="tabpanel">
+        <div class="tab-pane active" id="page" role="tabpanel">
           <table class="table table-bordered table-striped table-sm">
             <legend>
               [[ mes.mês ]] - [[ mes.carga_horária_str ]] - [[ mes.horas_trabalhadas_str ]]
@@ -47,7 +47,7 @@
                   <strong>[[ dia.horas_trabalhadas_str ]]</strong>
                 </td>
                 <td>
-                  <select name="" id="">
+                  <select name="observação" v-model='dia.observação' @change="atualizarDia(dia, {'observação': dia.observação})">
                     <option value="">---</option>
                     <option value="feriado">FERIADO</option>
                     <option value="atestado_manhã">ATESTADO MANHÃ</option>

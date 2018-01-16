@@ -18,16 +18,24 @@ class DiaTrabalhoSerializer(serializers.ModelSerializer):
         """Meta opções do serializador."""
 
         model = models.DiaTrabalho
-        fields = ['id',
-                  'mês_trabalho',
-                  'dia',
-                  'dia_semana',
-                  'entrada_manhã',
-                  'saída_manhã',
-                  'entrada_tarde',
-                  'saída_tarde',
-                  'horas_trabalhadas',
-                  'horas_trabalhadas_str']
+        extra_kwargs = {
+            'observação': {
+                'allow_blank': True
+            }
+        }
+        fields = [
+            'id',
+            'mês_trabalho',
+            'dia',
+            'dia_semana',
+            'entrada_manhã',
+            'saída_manhã',
+            'entrada_tarde',
+            'saída_tarde',
+            'horas_trabalhadas',
+            'horas_trabalhadas_str',
+            'observação',
+        ]
 
 
 class MêsTrabalhoSerializer(serializers.ModelSerializer):
@@ -41,13 +49,15 @@ class MêsTrabalhoSerializer(serializers.ModelSerializer):
         """Meta opções do serializador."""
 
         model = models.MêsTrabalho
-        fields = ['id',
-                  'mês',
-                  'carga_horária',
-                  'carga_horária_str',
-                  'horas_trabalhadas',
-                  'horas_trabalhadas_str',
-                  'dias']
+        fields = [
+            'id',
+            'mês',
+            'carga_horária',
+            'carga_horária_str',
+            'horas_trabalhadas',
+            'horas_trabalhadas_str',
+            'dias',
+        ]
 
 
 class MêsTrabalhoDetailSerializer(MêsTrabalhoSerializer):
@@ -58,13 +68,15 @@ class MêsTrabalhoDetailSerializer(MêsTrabalhoSerializer):
     class Meta(MêsTrabalhoSerializer.Meta):
         """Meta opções do serializador."""
 
-        fields = ['id',
-                  'mês',
-                  'carga_horária',
-                  'carga_horária_str',
-                  'horas_trabalhadas',
-                  'horas_trabalhadas_str',
-                  'dias']
+        fields = [
+            'id',
+            'mês',
+            'carga_horária',
+            'carga_horária_str',
+            'horas_trabalhadas',
+            'horas_trabalhadas_str',
+            'dias',
+        ]
 
 
 class CargaHoráriaSerializer(serializers.ModelSerializer):
@@ -76,12 +88,14 @@ class CargaHoráriaSerializer(serializers.ModelSerializer):
         """Meta opções do serializador."""
 
         model = models.CargaHorária
-        fields = ['id',
-                  'ponto',
-                  'ponto_str',
-                  'ano',
-                  'horas_trabalhadas',
-                  'horas_trabalhadas_str']
+        fields = [
+            'id',
+            'ponto',
+            'ponto_str',
+            'ano',
+            'horas_trabalhadas',
+            'horas_trabalhadas_str',
+        ]
 
 
 class CargaHoráriaDetailSerializer(CargaHoráriaSerializer):
@@ -93,13 +107,15 @@ class CargaHoráriaDetailSerializer(CargaHoráriaSerializer):
         """Meta opções do serializador."""
 
         model = models.CargaHorária
-        fields = ['id',
-                  'ponto',
-                  'ponto_str',
-                  'ano',
-                  'horas_trabalhadas',
-                  'horas_trabalhadas_str',
-                  'meses']
+        fields = [
+            'id',
+            'ponto',
+            'ponto_str',
+            'ano',
+            'horas_trabalhadas',
+            'horas_trabalhadas_str',
+            'meses',
+        ]
 
 
 class PontoSerializer(serializers.ModelSerializer):
@@ -111,7 +127,9 @@ class PontoSerializer(serializers.ModelSerializer):
         """Meta opções do serializador."""
 
         model = models.Ponto
-        fields = ['id',
-                  'siape',
-                  'dono',
-                  'dono_str']
+        fields = [
+            'id',
+            'siape',
+            'dono',
+            'dono_str',
+        ]

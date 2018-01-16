@@ -72,18 +72,20 @@ auditlog.register(CargaHorária)
 class MêsTrabalho(utils.CalculadoraTempoMixin, TimeStampedModel):
     """Um mês de trabalho referente a uma carga horária mensal."""
 
-    meses_trabalho = [(1, 'Janeiro'),
-                      (2, 'Fevereiro'),
-                      (3, 'Março'),
-                      (4, 'Abril'),
-                      (5, 'Maio'),
-                      (6, 'Junho'),
-                      (7, 'Julho'),
-                      (8, 'Agosto'),
-                      (9, 'Setembro'),
-                      (10, 'Outubro'),
-                      (11, 'Novembro'),
-                      (12, 'Dezembro')]
+    meses_trabalho = [
+        (1, 'Janeiro'),
+        (2, 'Fevereiro'),
+        (3, 'Março'),
+        (4, 'Abril'),
+        (5, 'Maio'),
+        (6, 'Junho'),
+        (7, 'Julho'),
+        (8, 'Agosto'),
+        (9, 'Setembro'),
+        (10, 'Outubro'),
+        (11, 'Novembro'),
+        (12, 'Dezembro'),
+    ]
 
     carga_horária = models.ForeignKey(CargaHorária, related_name='meses')
     mês = models.IntegerField(choices=meses_trabalho)
