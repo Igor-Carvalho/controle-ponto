@@ -1,0 +1,47 @@
+<!doctype html>{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  {% block style %}
+    <style>
+      @page {
+        size: A4;
+        margin: 3cm 2cm 1cm;
+      }
+    </style>
+  {% endblock style %}
+</head>
+<body>
+  <div>
+    <h5 style="float: left">Dias de Trabalho</h5>
+    <h5 style="float: right">Total: {{ total }}</h5>
+    <table class="table table-bordered table-hover table-clear">
+      <thead>
+        <th>ID</th>
+        <th>Dia</th>
+        <th>Dia da Semana</th>
+        <th>Entrada Manhã</th>
+        <th>Saída Manhã</th>
+        <th>Entrada Tarde</th>
+        <th>Saída Tarde</th>
+        <th>Observação</th>
+      </thead>
+
+      <tbody>
+        {% for dia in dias %}
+          <tr>
+            <td>{{ dia.id }}</td>
+            <td>{{ dia.dia }}</td>
+            <td>{{ dia.get_dia_semana_display }}</td>
+            <td>{{ dia.entrada_manhã }}</td>
+            <td>{{ dia.saída_manhã }}</td>
+            <td>{{ dia.entrada_tarde }}</td>
+            <td>{{ dia.saída_tarde }}</td>
+            <td>{{ dia.observação }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

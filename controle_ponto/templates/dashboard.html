@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block content %}
 <div class="row" id="row" v-cloak>
-  <div class="col-lg-10">
+  <div class="col-lg-12">
       <ul class="nav nav-tabs">
         <li class="nav-item" v-for="i in data.page_range">
           <a class="nav-link" :class="{'active': page === i}" data-toggle="tab" href="#page" @click="carregarCargaHorária(i)">[[ mêsNúmero(i) ]]</a>

@@ -9,6 +9,7 @@ from . import routes, views
 
 urlpatterns = [
     urls.url(r'^$', views.dashboard, name='dashboard'),
+    urls.url(r'^relatório/$', views.relatório, name='relatório'),
     urls.url(r'^contas/', urls.include('allauth.urls')),
     urls.url(r'^api/v1/', urls.include(routes.urls, namespace='v1')),
     urls.url(r'^api-auth/', urls.include('rest_framework.urls', namespace='rest_framework')),
