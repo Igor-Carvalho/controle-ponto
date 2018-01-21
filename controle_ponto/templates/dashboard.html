@@ -1,64 +1,70 @@
 {% extends "base.html" %} {% block content %}
 <div class="row" id="row" v-cloak>
   <div class="col-lg-12">
-      <ul class="nav nav-tabs">
-        <li class="nav-item" v-for="i in data.page_range">
-          <a class="nav-link" :class="{'active': page === i}" data-toggle="tab" href="#page" @click="carregarCargaHorária(i)">[[ mêsNúmero(i) ]]</a>
-        </li>
-      </ul>
+    <div style="float: right;">
+      <a class="btn btn-primary btn-sm" href="{% url "relatório" %}" target="_blank">
+        <i class="icon-docs"></i>
+      </a>
+    </div>
 
-      <div class="tab-content">
-        <div class="tab-pane active" id="page" role="tabpanel">
-          <table class="table table-bordered table-striped table-sm">
-            <legend>
-              [[ mes.mês ]] - [[ mes.carga_horária_str ]] - [[ mes.horas_trabalhadas_str ]]
-            </legend>
+    <ul class="nav nav-tabs">
+      <li class="nav-item" v-for="i in data.page_range">
+        <a class="nav-link" :class="{'active': page === i}" data-toggle="tab" href="#page" @click="carregarCargaHorária(i)">[[ mêsNúmero(i) ]]</a>
+      </li>
+    </ul>
 
-            <thead>
-              <tr>
-                <th>Dia</th>
-                <th>Dia</th>
-                <th>Entrada Manhã</th>
-                <th>Saída Manhã</th>
-                <th>Entrada Tarde</th>
-                <th>Saída Tarde</th>
-                <th>Horas Trabalhadas</th>
-                <th>Observação</th>
-              </tr>
-            </thead>
+    <div class="tab-content">
+      <div class="tab-pane active" id="page" role="tabpanel">
+        <table class="table table-bordered table-striped table-sm">
+          <legend>
+            [[ mes.mês ]] - [[ mes.carga_horária_str ]] - [[ mes.horas_trabalhadas_str ]]
+          </legend>
 
-            <tbody>
-              <tr v-for="dia in mes.dias" :key="dia.id">
-                <td>[[ dia.dia_semana ]]</td>
-                <td>[[ dia.dia ]]</td>
-                <td>
-                  <input type="datetime" v-model="dia.entrada_manhã" @blur="atualizarDia(dia, {'entrada_manhã': dia.entrada_manhã})">
-                </td>
-                <td>
-                  <input type="datetime" v-model="dia.saída_manhã" @blur="atualizarDia(dia, {'saída_manhã': dia.saída_manhã})">
-                </td>
-                <td>
-                  <input type="datetime" v-model="dia.entrada_tarde" @blur="atualizarDia(dia, {'entrada_tarde': dia.entrada_tarde})">
-                </td>
-                <td>
-                  <input type="datetime" v-model="dia.saída_tarde" @blur="atualizarDia(dia, {'saída_tarde': dia.saída_tarde})">
-                </td>
-                <td>
-                  <strong>[[ dia.horas_trabalhadas_str ]]</strong>
-                </td>
-                <td>
-                  <select name="observação" v-model='dia.observação' @change="atualizarDia(dia, {'observação': dia.observação})">
-                    <option value="">---</option>
-                    <option value="feriado">FERIADO</option>
-                    <option value="atestado_manhã">ATESTADO MANHÃ</option>
-                    <option value="atestado_tarde">ATESTADO TARDE</option>
-                    <option value="falta">FALTA</option>
-                  </select>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+          <thead>
+            <tr>
+              <th>Dia</th>
+              <th>Dia</th>
+              <th>Entrada Manhã</th>
+              <th>Saída Manhã</th>
+              <th>Entrada Tarde</th>
+              <th>Saída Tarde</th>
+              <th>Horas Trabalhadas</th>
+              <th>Observação</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr v-for="dia in mes.dias" :key="dia.id">
+              <td>[[ dia.dia_semana ]]</td>
+              <td>[[ dia.dia ]]</td>
+              <td>
+                <input type="datetime" v-model="dia.entrada_manhã" @blur="atualizarDia(dia, {'entrada_manhã': dia.entrada_manhã})">
+              </td>
+              <td>
+                <input type="datetime" v-model="dia.saída_manhã" @blur="atualizarDia(dia, {'saída_manhã': dia.saída_manhã})">
+              </td>
+              <td>
+                <input type="datetime" v-model="dia.entrada_tarde" @blur="atualizarDia(dia, {'entrada_tarde': dia.entrada_tarde})">
+              </td>
+              <td>
+                <input type="datetime" v-model="dia.saída_tarde" @blur="atualizarDia(dia, {'saída_tarde': dia.saída_tarde})">
+              </td>
+              <td>
+                <strong>[[ dia.horas_trabalhadas_str ]]</strong>
+              </td>
+              <td>
+                <select name="observação" v-model='dia.observação' @change="atualizarDia(dia, {'observação': dia.observação})">
+                  <option value="">---</option>
+                  <option value="feriado">FERIADO</option>
+                  <option value="atestado_manhã">ATESTADO MANHÃ</option>
+                  <option value="atestado_tarde">ATESTADO TARDE</option>
+                  <option value="falta">FALTA</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
