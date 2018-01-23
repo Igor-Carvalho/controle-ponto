@@ -55,8 +55,11 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'auditlog',
+    'compat',
     'django_assets',
     'django_filters',
+    'hijack',
+    'hijack_admin',
     'post_office',
     'rest_framework',
     'widget_tweaks',
@@ -184,6 +187,11 @@ REST_FRAMEWORK = {
 }
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
+
+HIJACK_LOGIN_REDIRECT_URL = '/'  # URI onde admins são redirecionados após logarem como um usuário
+HIJACK_LOGOUT_REDIRECT_URL = '/'  # URI onde admins são redirecionados após liberarem um usuário
+HIJACK_REGISTER_ADMIN = False
+HIJACK_ALLOW_GET_REQUESTS = True
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

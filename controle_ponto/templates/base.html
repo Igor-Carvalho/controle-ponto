@@ -1,4 +1,4 @@
-<!doctype html>{% load assets static %}
+<!doctype html>{% load assets static hijack_tags %}
 <html lang="en">
 <head>
   {% block meta %}
@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{% static "bootstrap-vue/dist/bootstrap-vue.css" %}">
     <link rel="stylesheet" href="{% static "font-awesome/css/font-awesome.min.css" %}">
     <link rel="stylesheet" href="{% static "simple-line-icons/css/simple-line-icons.css" %}">
+    <link rel="stylesheet" href="{% static "hijack/hijack-styles.css" %}" />
     <link rel="stylesheet" href="{% static "css/style.min.css" %}">
   {% endblock css %}
 
@@ -22,6 +23,7 @@
   {% block local_styles %}{% endblock local_styles %}
 </head>
 <body class="{% block body_class %}app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden{% endblock body_class %}">
+  {% hijack_notification %}
   {% block body %}
     <header class="app-header navbar">
       <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">

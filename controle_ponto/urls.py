@@ -14,6 +14,7 @@ urlpatterns = [
     urls.url(r'^api/v1/', urls.include(routes.urls, namespace='v1')),
     urls.url(r'^api-auth/', urls.include('rest_framework.urls', namespace='rest_framework')),
     urls.url(r'^admin/', urls.include(admin.site.urls)),
+    urls.url(r'^hijack/', urls.include('hijack.urls', namespace='hijack')),
     urls.url(r'^docs/', documentation.include_docs_urls(title='Documentação funcional da API')),
 ]
 
