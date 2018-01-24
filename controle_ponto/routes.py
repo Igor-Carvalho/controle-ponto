@@ -2,15 +2,11 @@
 
 from rest_framework import routers
 
-from core import views as core_views
-from ponto import views as ponto_views
+from core import routes as core_routes
+from ponto import routes as ponto_routes
 
 router = routers.DefaultRouter()
-router.register('users', core_views.UserViewSet)
-
-router.register('pontos', ponto_views.PontoViewSet)
-router.register('carga-horária', ponto_views.CargaHoráriaViewSet)
-router.register('meses', ponto_views.MêsTrabalhoViewSet)
-router.register('dias', ponto_views.DiaTrabalhoViewSet)
+core_routes.registrar_api(router)
+ponto_routes.registrar_api(router)
 
 urls = router.urls
