@@ -31,6 +31,7 @@ django = "==1.11.*"
 django-hijack = "*"
 django-hijack-admin = "*"
 "a6bc15c" = {file = "https://github.com/fdemmer/django-weasyprint/archive/v0.4.zip"}
+whitenoise = "*"
 
 
 [dev-packages]
