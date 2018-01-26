@@ -1,0 +1,44 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+celery = "*"
+django-allauth = "*"
+django-assets = "*"
+django-auditlog = "*"
+django-environ = "*"
+cssmin = "*"
+django-extra-fields = "*"
+django-filter = "*"
+django-model-utils = "*"
+django-post-office = "*"
+django-redis = "*"
+django-widget-tweaks = "*"
+djangorestframework = "*"
+gunicorn = "*"
+invoke = "*"
+boto = "*"
+weasyprint = "*"
+"psycopg2" = "*"
+coreapi = "*"
+pillow = "*"
+django = "==1.11.*"
+django-hijack = "*"
+django-hijack-admin = "*"
+"a6bc15c" = {file = "https://github.com/fdemmer/django-weasyprint/archive/v0.4.zip"}
+
+
+[dev-packages]
+
+coverage = "*"
+django-debug-toolbar = "*"
+bpython = "*"
+factory-boy = "*"
+selenium = "*"
+pyinotify = "*"
+django = "==1.11.*"
