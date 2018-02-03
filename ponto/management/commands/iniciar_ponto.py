@@ -1,8 +1,6 @@
 """Inicializa o ponto para um usuário."""
 
 import logging
-import os
-import sys
 
 from django.core import management
 
@@ -22,8 +20,6 @@ class Command(management.BaseCommand):
 
     def handle(self, **options):
         """Executa o comando."""
-        if 'development' not in os.environ['DJANGO_SETTINGS_MODULE']:
-            logger.info('Esse comando deve apenas ser usado em desenvolvimento.')
-            sys.exit(1)
-
+        logger.info(f'Criação de planilha de dados para o usuário {options["username"]} iniciada...')
         models.Ponto.objects.iniciar_ponto(options['username'], options['siape'], options['ano'])
+        logger.info('Planilha criada com sucesso.')
