@@ -8,7 +8,7 @@
     </div>
 
     <ul class="nav nav-tabs">
-      <li class="nav-item" v-for="i in data.page_range">
+      <li class="nav-item" v-for="i in data.page_range" :key="i">
         <a class="nav-link" :class="{'active': page === i}" data-toggle="tab" href="#page" @click="carregarCargaHorária(i)">[[ mêsNúmero(i) ]]</a>
       </li>
     </ul>

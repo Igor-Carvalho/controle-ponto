@@ -49,7 +49,7 @@ class CargaHoráriaViewSet(PontoBaseViewSet):
         if not self.request.user.is_superuser:
             queryset = queryset.filter(ponto__dono=self.request.user)
 
-        return queryset
+        return queryset.distinct()
 
     def get_serializer_class(self):
         """Obtém um serializador diferente para exibir mais detalhes sobre a carga horária."""
