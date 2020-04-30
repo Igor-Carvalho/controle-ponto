@@ -14,7 +14,7 @@
     "bootstrap": "^4.0.0-beta.3",
     "bootstrap-vue": "^1.4.0",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.2.1",
+    "jquery": "^3.5.0",
     "lodash": "^4.17.4",
     "simple-line-icons": "^2.4.1",
     "uglify-js": "^3.3.5",
